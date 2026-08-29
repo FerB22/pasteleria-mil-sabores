@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mantenedor de usuarios — <em>Backoffice</em></title>
+  <link rel="stylesheet" href="../css/styles.css">
+  <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="admin-brand">Pastelería Mil Sabores</div>
+      <ul class="admin-menu">
+        <li><a href="index.html">Panel general</a></li>
+        <li><a href="productos.html">Gestión de productos</a></li>
+        <li><a href="usuarios.html" class="active">Gestión de usuarios</a></li>
+        <li><a href="../productos.html" target="_blank">Ver tienda pública</a></li>
+        <li><a href="../login.html">Cerrar sesión</a></li>
+      </ul>
+      <div class="admin-user-info">
+        <strong>Administrador del Sistema</strong><br>
+        <small class="text-muted">admin@duoc.cl</small>
+      </div>
+    </aside>
+
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <div>
+          <h1 style="font-size: 1.8rem; color: #1e293b;">Mantenedor de Usuarios</h1>
+          <p class="text-muted">Control de perfiles para Administradores, Vendedores y Clientes.</p>
+        </div>
+        <div>
+          <button class="btn btn-primary" onclick="openUserModal()">Nuevo usuario</button>
+        </div>
+      </div>
+
+      <div class="admin-card">
+        <div class="admin-card-header">
+          <h2 class="admin-card-title">Usuarios registrados en la plataforma</h2>
+        </div>
+        <div style="overflow-x: auto;">
+          <table class="admin-table">
+            <thead>
+              <tr>
+                <th>RUN</th>
+                <th>Nombre completo</th>
+                <th>Correo electrónico</th>
+                <th>Rol</th>
+                <th>Ubicación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody id="admin-users-tbody"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="user-modal" class="modal-overlay">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="user-modal-title" style="color: var(--accent);">Nuevo usuario</h3>
+        <button class="modal-close" onclick="closeUserModal()" aria-label="Cerrar ventana">&times;</button>
+      </div>
+      <form id="user-form" onsubmit="saveUserFromForm(event)" novalidate>
+        <input type="hidden" id="user-is-new" value="true">
+        <div class="modal-body">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="user-run" class="form-label">RUN chileno *</label>
+              <input type="text" id="user-run" class="form-control" placeholder="18456789K (sin puntos ni guion)" maxlength="9" required>
+              <span class="form-hint">Entre 7 y 9 caracteres sin puntos ni guion (Módulo 11).</span>
+            </div>
+
+            <div class="form-group">
+              <label for="user-role" class="form-label">Rol en el sistema *</label>
+              <select id="user-role" class="form-control" required>
+                <option value="Cliente">Cliente (acceso restringido a tienda)</option>
+                <option value="Vendedor">Vendedor (visualización de catálogo y órdenes)</option>
+                <option value="Administrador">Administrador (acceso total)</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="user-name" class="form-label">Nombre *</label>
+              <input type="text" id="user-name" class="form-control" placeholder="Ejemplo: Administrador" maxlength="50" required>
+            </div>
+
+            <div class="form-group">
+              <label for="user-lastname" class="form-label">Apellidos *</label>
+              <input type="text" id="user-lastname" class="form-control" placeholder="Ejemplo: Sistema" maxlength="100" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="user-email" class="form-label">Correo electrónico *</label>
+              <input type="email" id="user-email" class="form-control" placeholder="usuario@duoc.cl o @gmail.com" maxlength="100" required>
+              <span class="form-hint">Solo se admiten correos @duoc.cl, @profesor.duoc.cl y @gmail.com</span>
+            </div>
+
+            <div class="form-group">
+              <label for="user-birth" class="form-label">Fecha de nacimiento</label>
+              <input type="date" id="user-birth" class="form-control">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label for="user-region" class="form-label">Región *</label>
+              <select id="user-region" class="form-control" required>
+                <option value="">-- Seleccionar región --</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="user-comuna" class="form-label">Comuna *</label>
+              <select id="user-comuna" class="form-control" required disabled>
+                <option value="">-- Seleccione una región primero --</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="user-address" class="form-label">Dirección *</label>
+            <input type="text" id="user-address" class="form-control" placeholder="Ejemplo: Avenida España 8, Santiago Centro" maxlength="300" required>
+            <span class="form-hint">Máximo 300 caracteres.</span>
+          </div>
+        </div>
+
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline" onclick="closeUserModal()">Cancelar</button>
+          <button type="submit" class="btn btn-primary">Guardar usuario</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="../js/data.js"></script>
+  <script src="../js/validators.js"></script>
+  <script src="../js/cart.js"></script>
+  <script src="../js/admin.js"></script>
+  <script src="../js/main.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      initRegionComunaSelectors("user-region", "user-comuna");
+      renderAdminUsers();
+    });
+  </script>
+</body>
+</html>

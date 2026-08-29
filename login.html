@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Iniciar sesión — Pastelería Mil Sabores</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo">Mil Sabores <span>Pastelería</span></a>
+      <button class="hamburger" aria-label="Abrir menú de navegación">Menú</button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="blogs.html"><em>Blog</em></a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="login.html" class="active">Ingresar</a></li>
+          <li><a href="registro.html">Registro</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="carrito.html" class="cart-btn">Carrito <span class="cart-badge">0</span></a>
+        <a href="admin/index.html" class="admin-pill">Administración</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="form-container">
+      <div style="text-align: center; margin-bottom: 25px;">
+        <h1 style="color: var(--accent); font-size: 1.8rem;">Iniciar sesión</h1>
+        <p class="text-muted">Acceso para clientes y personal administrativo</p>
+      </div>
+
+      <form id="login-form" novalidate>
+        <div class="form-group">
+          <label for="login-email" class="form-label">Correo electrónico *</label>
+          <input type="email" id="login-email" class="form-control" placeholder="admin@duoc.cl o usuario@gmail.com" required maxlength="100">
+          <span class="form-hint">Dominios permitidos: @duoc.cl, @profesor.duoc.cl, @gmail.com</span>
+        </div>
+
+        <div class="form-group">
+          <label for="login-password" class="form-label">Contraseña *</label>
+          <input type="password" id="login-password" class="form-control" placeholder="Contraseña de 4 a 10 caracteres" required minlength="4" maxlength="10">
+          <span class="form-hint">Debe contener entre 4 y 10 caracteres.</span>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" style="margin-top: 15px;">Ingresar a la plataforma</button>
+      </form>
+
+      <div style="text-align: center; margin-top: 25px; border-top: 1px solid var(--border-color); padding-top: 15px; font-size: 0.9rem;">
+        <p>¿No tiene una cuenta aún? <a href="registro.html" style="font-weight: 700;">Regístrese aquí</a></p>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Pastelería Mil Sabores SpA. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/validators.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
