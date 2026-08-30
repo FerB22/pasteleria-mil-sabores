@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de compras — Pastelería Mil Sabores</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container navbar">
+      <a href="index.html" class="logo">Mil Sabores <span>Pastelería</span></a>
+      <button class="hamburger" aria-label="Abrir menú de navegación">Menú</button>
+      <nav>
+        <ul class="nav-links">
+          <li><a href="index.html">Inicio</a></li>
+          <li><a href="nosotros.html">Nosotros</a></li>
+          <li><a href="productos.html">Productos</a></li>
+          <li><a href="blogs.html"><em>Blog</em></a></li>
+          <li><a href="contacto.html">Contacto</a></li>
+          <li><a href="login.html">Ingresar</a></li>
+          <li><a href="registro.html">Registro</a></li>
+        </ul>
+      </nav>
+      <div class="nav-actions">
+        <a href="carrito.html" class="cart-btn active">Carrito <span class="cart-badge">0</span></a>
+        <a href="admin/index.html" class="admin-pill">Administración</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="container section">
+    <div class="section-header">
+      <h1 class="section-title">Carrito de compras</h1>
+      <p class="section-subtitle">Revise los artículos seleccionados antes de confirmar su pedido.</p>
+    </div>
+
+    <div id="cart-empty-state" style="text-align: center; padding: 60px 20px; background: #fff; border-radius: var(--radius-md); border: 1px solid var(--border-color);">
+      <h2 style="color: var(--accent); margin-bottom: 10px;">Su carrito se encuentra vacío</h2>
+      <p style="color: var(--text-muted); margin-bottom: 25px;">Aún no ha añadido productos al carro de compra.</p>
+      <a href="productos.html" class="btn btn-primary">Ir al catálogo de productos</a>
+    </div>
+
+    <div id="cart-content-state" style="display: none; grid-template-columns: 2fr 1fr; gap: 30px;">
+      <div>
+        <div class="cart-table-wrapper">
+          <table class="cart-table">
+            <thead>
+              <tr>
+                <th>Producto</th>
+                <th>Precio</th>
+                <th>Cantidad</th>
+                <th>Subtotal</th>
+                <th>Acción</th>
+              </tr>
+            </thead>
+            <tbody id="cart-table-body"></tbody>
+          </table>
+        </div>
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+          <a href="productos.html" class="btn btn-outline">Continuar comprando</a>
+          <button class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="Cart.clearCart()">Vaciar carrito</button>
+        </div>
+      </div>
+
+      <div>
+        <div class="cart-summary-box">
+          <h3 style="color: var(--accent); margin-bottom: 15px; border-bottom: 1px solid var(--border-color); padding-bottom: 10px;">Resumen del pedido</h3>
+          
+          <div style="margin-bottom: 15px; padding-bottom: 15px; border-bottom: 1px dashed var(--border-color);">
+            <label for="coupon-code" style="font-size: 0.85rem; font-weight: 600; display: block; margin-bottom: 6px;">¿Tiene un cupón de descuento?</label>
+            <div style="display: flex; gap: 8px;">
+              <input type="text" id="coupon-code" placeholder="Ej: FELICES50" class="form-control" style="text-transform: uppercase; font-size: 0.85rem; padding: 6px 10px;">
+              <button type="button" class="btn btn-sm btn-outline" onclick="Cart.applyCoupon()">Aplicar</button>
+            </div>
+            <small id="coupon-feedback" style="display: block; margin-top: 4px; font-size: 0.78rem;"></small>
+          </div>
+
+          <div class="summary-row">
+            <span>Valor neto:</span>
+            <strong id="summary-neto">$ 0</strong>
+          </div>
+          <div class="summary-row">
+            <span>IVA (19 %):</span>
+            <strong id="summary-iva">$ 0</strong>
+          </div>
+          <div class="summary-row" id="summary-discount-row" style="display: none; color: var(--success);">
+            <span>Descuento aplicado:</span>
+            <strong id="summary-discount">- $ 0</strong>
+          </div>
+          <div class="summary-row summary-total">
+            <span>Total a pagar:</span>
+            <span id="summary-total">$ 0</span>
+          </div>
+          <div style="margin-top: 25px;">
+            <button class="btn btn-primary btn-block" onclick="checkoutSimulado()">Finalizar pedido</button>
+          </div>
+          <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 12px; text-align: center;">
+            Pago procesado mediante Webpay o transferencia bancaria.
+          </p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-bottom">
+      <p>&copy; 2026 Pastelería Mil Sabores SpA. Todos los derechos reservados.</p>
+    </div>
+  </footer>
+
+  <script src="js/data.js"></script>
+  <script src="js/validators.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    function checkoutSimulado() {
+      showToast("Pedido confirmado exitosamente. Recibirá el comprobante en su correo.", "success");
+      setTimeout(() => {
+        Cart.clearCart();
+        window.location.href = "index.html";
+      }, 2000);
+    }
+  </script>
+</body>
+</html>
